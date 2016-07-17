@@ -18,28 +18,22 @@
 <jsp:include page="/top.jsp" flush="true">
 	<jsp:param name="abc" value="0"/>
 </jsp:include>
+
 <div class="container" id="main">
-    <div class="col-md-10 col-md-offset-1">
-        <div class="panel panel-default">
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>#</th> <th>사용자 아이디</th> <th>이름</th> <th>이메일</th><th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${users}" var="user" varStatus="status">
-                    <tr>
-                        <th scope="row">${status.count}</th>
-                        <td>${user.userId}</td>
-                        <td>${user.name}</td>
-                        <td>${user.email}</td>
-                        <td><a href="/user/modify?userId=${user.userId}&name=${user.name}&email=${user.email}" class="btn btn-success" role="button">수정</a>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+   <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-default content-main">
+          <form name="question" method="post" action="/user/login">
+              <div class="form-group">
+                  <label for="userId">아이디</label>
+                  <input class="form-control" id="userId" name="userId" placeholder="User ID">
+              </div>
+              <div class="form-group">
+                  <label for="password">패스워드</label>
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+              </div>
+              <button type="submit" class="btn btn-success clearfix pull-right">ë¡ê·¸ì¸</button>
+              <div class="clearfix" />
+          </form>
         </div>
     </div>
 </div>
@@ -48,5 +42,5 @@
 <script src="../js/jquery-2.2.0.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/scripts.js"></script>
-</body>
+	</body>
 </html>

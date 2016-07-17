@@ -10,7 +10,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
+import core.db.DataBase;
 import core.jdbc.ConnectionManager;
+import next.model.User;
 
 @WebListener
 public class ContextLoaderListener implements ServletContextListener {
@@ -18,6 +20,10 @@ public class ContextLoaderListener implements ServletContextListener {
 	
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
+		// For test
+		User user = new User("2", "2", "2", "2@2.com");
+		DataBase.addUser(user);
+		
 		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
 		populator.addScript(new ClassPathResource("jwp.sql"));
 		DatabasePopulatorUtils.execute(populator, ConnectionManager.getDataSource());
