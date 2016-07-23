@@ -9,7 +9,6 @@
 </head>
 <body>
 <%@ include file="/include/navigation.jspf" %>
-
 <div class="container" id="main">
 	<div class="col-md-12 col-sm-12 col-lg-10 col-lg-offset-1">
 		<div class="panel panel-default qna-list">
@@ -48,9 +47,11 @@
 						<li><a href="#">»</a></li>
 					</ul>
 				</div>
-				<div class="col-md-3 qna-write">
-					<a href="/qna/form" class="btn btn-primary pull-right" role="button">질문하기</a>
-				</div>
+		    	<c:if test="${not empty sessionScope.user}">
+					<div class="col-md-3 qna-write">
+						<a href="/qna/form" class="btn btn-primary pull-right" role="button">질문하기</a>
+					</div>
+				</c:if>
 			</div>
 		</div>
 	</div>

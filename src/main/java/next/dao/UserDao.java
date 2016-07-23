@@ -10,16 +10,14 @@ import core.jdbc.RowMapper;
 
 public class UserDao {
     public void insert(User user) {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, user.getUserId(),
+        JdbcTemplate.get().update(sql, user.getUserId(),
                 user.getPassword(),
                 user.getName(),
                 user.getEmail());
     }
 
     public User findByUserId(String userId) {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "SELECT userId, password, name, email FROM USERS WHERE userid=?";
         
         RowMapper<User> rm = new RowMapper<User>() {
@@ -32,11 +30,26 @@ public class UserDao {
             }
         };
         
-        return jdbcTemplate.queryForObject(sql, rm, userId);
+        return JdbcTemplate.get().queryForObject(sql, rm, userId);
+    }
+    
+    public User findByUserName(String name) {
+        String sql = "SELECT userId, password, name, email FROM USERS WHERE name=?";
+        
+        RowMapper<User> rm = new RowMapper<User>() {
+            @Override
+            public User mapRow(ResultSet rs) throws SQLException {
+                return new User(rs.getString("userId"), 
+                        rs.getString("password"), 
+                        rs.getString("name"),
+                        rs.getString("email"));
+            }
+        };
+        
+        return JdbcTemplate.get().queryForObject(sql, rm, name);
     }
 
     public List<User> findAll() throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "SELECT userId, password, name, email FROM USERS";
         
         RowMapper<User> rm = new RowMapper<User>() {
@@ -49,13 +62,12 @@ public class UserDao {
             }
         };
         
-        return jdbcTemplate.query(sql, rm);
+        return JdbcTemplate.get().query(sql, rm);
     }
 
     public void update(User user) {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "UPDATE USERS set password = ?, name = ?, email = ? WHERE userId = ?";
-        jdbcTemplate.update(sql, user.getPassword(),
+        JdbcTemplate.get().update(sql, user.getPassword(),
                 user.getName(),
                 user.getEmail(),
                 user.getUserId());
