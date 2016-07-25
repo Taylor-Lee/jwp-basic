@@ -12,17 +12,21 @@ import core.mvc.ModelAndView;
 import next.dao.QuestionDao;
 import next.model.Question;
 
-public class DeleteQuestionController extends AbstractController {
-	private static final Logger log = LoggerFactory.getLogger(DeleteQuestionController.class);
+public class ApiDeleteQuestionController extends AbstractController {
+	private static final Logger log = LoggerFactory.getLogger(ApiDeleteQuestionController.class);
 
 	
 	
 	@Override
 	public ModelAndView execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		ModelAndView mav = jsonView();
 		// FIXME: Alert the fail
-		if (!DeleteQuestion.deleteQuestion(req))
-			return jspView("redirect:/qna/show?questionId=" + req.getParameter("questionId"));
+		if (DeleteQuestion.deleteQuestion(req)) {
+			mav.addObject("deleteResult", true);
+			return mav;
+		}
 		
-		return jspView("redirect:/");
+		mav.addObject("deleteResult", false);
+		return mav;
 	}
 }

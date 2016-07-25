@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
+import next.model.Answer;
 import next.model.Question;
 import core.jdbc.JdbcTemplate;
 import core.jdbc.KeyHolder;
@@ -93,8 +94,15 @@ public class QuestionDao {
 		if (question.getCountOfComment() == 0)
 			return true;
 		
+		String qWriter = question.getWriter();
+		AnswerDao answerDao = new AnswerDao();
+		List<Answer> answers = answerDao.findAllByQuestionId(question.getQuestionId());
+		for (Answer answer : answers) {
+			if (qWriter != answer.getWriter())
+				return false;
+		}
 		
-		return false;
+		return true;
 	}
 	
 	public boolean delete(long questionId) {
@@ -102,7 +110,19 @@ public class QuestionDao {
 		if (!isAbleDelete(question))
 			return false;
 		
-		
+		String sql = "DELETE FROM QUESTIONS WHERE questionId = ?";      
+        PreparedStatementCreator psc = new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				pstmt.setLong(1, questionId);
+				return pstmt;
+			}
+		};
+        
+		KeyHolder keyHolder = new KeyHolder();
+        JdbcTemplate.get().update(psc, keyHolder);
+        
 		return true;
 	}
 	
