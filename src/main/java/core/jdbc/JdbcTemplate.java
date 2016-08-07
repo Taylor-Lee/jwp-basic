@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcTemplate {
-	static JdbcTemplate publicJdbc = null;
+	private static JdbcTemplate publicJdbc = new JdbcTemplate();
 	
-	public static JdbcTemplate get() {
-		if (publicJdbc == null)
-			publicJdbc = new JdbcTemplate();
-		
+	private JdbcTemplate() {
+	}
+	
+	public static JdbcTemplate get() {	
 		return publicJdbc;
 	}
 	

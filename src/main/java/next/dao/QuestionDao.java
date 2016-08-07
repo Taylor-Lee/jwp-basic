@@ -72,6 +72,7 @@ public class QuestionDao {
     }
 	
 	public Question update(Question question) {
+		// FIXME: Following SQL doesn't work
         String sql = "UPDATE QUESTIONS SET writer=?, title=?, contents=? WHERE questionId=?";
         PreparedStatementCreator psc = new PreparedStatementCreator() {
 			@Override

@@ -6,4 +6,4 @@
 * 서버에 해당 요청이 들어오면 ResourceFilter 를 통해 해당 URL 이 단순 Resource 요청(css, js, fonts, image, favicon.ico)인지를 확인한다. 단순 Resource 요청인 경우 요청 URL 로 바로 Forward 를 시켜준다. 현재 http://localhost:8080 요청은 단순 Resource 요청이 아니기 때문에 DispatcherServlet 의 service() 함수에서 처리된다. 일단, RequestMapping 을 통해 요청 URL 인 ‘/‘ 에 대한 Mapping controller 인 HomeController 를 찾아낸다. 이후 HomeController 의 execute() 함수가 실행되면서 ‘index.jsp’ 파일로 JspView 인스턴스를 생성하고, 해당 instance 에 SQL 에 저장되어 있는 모든 Questions 을 찾아 추가한다. 마지막으로 JspView 인스턴스가 ‘index.jsp’ 로 Forward 하면, 서블릿 컨테이너에서 서블릿 원시코드로 변환 후 컴파일된 후 HTML 형태로 클라이언트에 돌려준다.
 
 #### 7. next.web.qna package의 ShowController는 멀티 쓰레드 상황에서 문제가 발생하는 이유에 대해 설명하라.
-* 모르겠습니다..
+* Single instance 인 ShowController 가 상태값을 가지는 필드(Question question, List<Answer> answers)를 가지고 있기 때문에 문제가 발생한다. 이를 해결하기 위해 문제가 되는 변수를 변수가 사용되는 함수 execute() 안에 Local 변수로 선언한다.
