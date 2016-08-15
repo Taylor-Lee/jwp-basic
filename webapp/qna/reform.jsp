@@ -27,6 +27,7 @@
                   <label for="contents">내용</label>
                   <textarea name="contents" id="contents" rows="5" class="form-control">${question.contents}</textarea>
               </div>
+              <input type="hidden" name="questionId" value="${question.questionId}"/>
               <button type="submit" class="btn btn-success clearfix pull-right">수정하기</button>
               <div class="clearfix" />
           </form>

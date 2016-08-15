@@ -29,6 +29,11 @@ public class Question {
 		this.countOfComment = countOfComment;
 	}
 
+	public void update(Question question) {
+		this.title = question.getTitle();
+		this.contents = question.getContents();
+	}
+	
 	public long getQuestionId() {
 		return questionId;
 	}
@@ -55,6 +60,13 @@ public class Question {
 
 	public int getCountOfComment() {
 		return countOfComment;
+	}
+	
+	public boolean isSameUser(User user) {
+		if (writer.equals(user.getName()))
+			return true;
+		
+		return false;
 	}
 
 	@Override

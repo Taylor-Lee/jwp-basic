@@ -73,15 +73,14 @@ public class QuestionDao {
 	
 	public Question update(Question question) {
 		// FIXME: Following SQL doesn't work
-        String sql = "UPDATE QUESTIONS SET writer=?, title=?, contents=? WHERE questionId=?";
+        String sql = "UPDATE QUESTIONS SET title=?, contents=? WHERE questionId=?";
         PreparedStatementCreator psc = new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, question.getWriter());
-				pstmt.setString(2, question.getTitle());
-				pstmt.setString(3, question.getContents());
-				pstmt.setLong(4, question.getQuestionId());
+				pstmt.setString(1, question.getTitle());
+				pstmt.setString(2, question.getContents());
+				pstmt.setLong(3, question.getQuestionId());
 				return pstmt;
 			}
 		};
